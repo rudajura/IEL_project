@@ -1,0 +1,53 @@
+\section{Příklad 5}
+% Jako parametr zadejte skupinu (A-H)
+\patyZadani{H}
+
+\subsection{Sestavení diferenciální rovnice}
+\begin{figure}[H]
+Vytvoříme si rovnici pro napětí na kondenzátoru: $$u_C' = \frac{i_c}{C}$$
+Rovnici pro celkové napětí: $$u_R + u_C = U =>u_R = U - u_C$$
+Rovnici pro proud: $$i = \frac{u_R}{R}$$
+Dosadíme rovnici pro proud: $$u_C' = \frac{u_R}{R.C}$$
+Dosadíme rovnici pro $u_R$: $$u_C' = \frac{U - u_C}{R.C}$$
+Vznikne nám diferenciální rovnice: $$u_C'.R.C + u_C = U$$
+$u_C$ si nahradíme $\lambda$ a $u_C$ nahradíme 1 a vyjádříme:
+$$u_C' = \lambda$$ $$u_C = 1$$ $$R.C.\lambda + 1 = 0$$ $$\lambda = -\frac{1}{R.C}$$ $$\lambda = -\frac{1}{2000}$$
+\end{figure}
+
+\begin{figure}[H]
+Počáteční podmínka: $$u_C(0) = u_Cp$$
+Očekávané řešení: $$u_C(t) = K(t)\times e^{\lambda t}$$ $$u_C(t) = K(t)\times e^{-\frac{1}{R.C}t}$$
+Zderivujeme $u_C$: $$u_C' = K'(t)\times e^{-\frac{1}{R.C}t} + K(t) \times (-\frac{1}{R.C})\times e^{-\frac{1}{R.C}t}$$
+Dosadíme do diferenciální rovnice: $$R\times C\times K'(t)\times e^{-\frac{1}{R.C}t} - K(t)\times e^{-\frac{1}{R.C}t} + K(t) \times e^{-\frac{1}{R.C}t} = U$$
+Upravíme: $$R\times C \times K'(t) \times e^{-\frac{1}{R.C}t} = U$$
+$$K'(t) = \frac{U}{R.C}\times e^{\frac{1}{R.C}t}$$
+Integrujeme: $$K(t) = \frac{U}{R.C} \times R\times C \times e^{\frac{1}{R.C}t} + k$$
+$$K(t) = U\times e^{\frac{1}{R.C}t} + k$$
+Dosadíme do $u_C$: $$u_C(t) = (U \times e^{\frac{1}{R.C}t} + k) \times e^{-\frac{1}{R.C}t}$$
+$$u_C(t) = U + k\times e^{-\frac{1}{R.C}t}$$
+Dosadíme počáteční podmínku $u_C(0) = u_Cp$:
+$$u_Cp = U + k\times e^0 => k = u_Cp - U => k = 4 - 8 = -4$$
+$$u_c(t) = U + (u_Cp - U) \times e^{-\frac{1}{R.C}t}$$
+\end{figure}
+
+\subsection{Dosazení čísel}
+\begin{figure}[H]
+$$K(t) = 8\times e^{\frac{1}{2000}t} + k$$
+$$K'(t) = \frac{8}{2000} \times e^{\frac{1}{2000}t}$$
+Konečné vyjádření rovnice: $$u_C(t) = 8 - 4\times e^{-\frac{1}{2000}t}$$
+\end{figure}
+
+\subsection{Kontrola výpočtu}
+\begin{figure}[H]
+Zkontrolujeme si výpočet dosazením do diferenciální rovnice:
+$$u_C'(t) = \frac{8}{2000} \times e^{\frac{1}{2000}t} \times e^{-\frac{1}{2000}t} + (8 \times e^{\frac{1}{2000}t} - 4)\times (-\frac{1}{2000})\times e^{-\frac{1}{2000}t}$$
+$$u_C(t) = 8 - 4\times e^{-\frac{1}{2000}t}$$
+
+\begin{align*}
+2000u_C' + u_C = 8 \\
+2000( \frac{8}{2000} \times e^{\frac{1}{2000}t} \times e^{-\frac{1}{2000}t} + (8 \times e^{\frac{1}{2000}t} - 4)\times (-\frac{1}{2000})\times e^{-\frac{1}{2000}t}) + (8 - 4\times e^{-\frac{1}{2000}t}) = 8 \\
+4\times e^{-\frac{1}{2000}t} + 8 - 4\times e^{-\frac{1}{2000}t} = 8 \\
+8 = 8
+\end{align*}
+\end{figure}
+

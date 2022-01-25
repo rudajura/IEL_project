@@ -1,0 +1,153 @@
+\section{Příklad 3}
+% Jako parametr zadejte skupinu (A-H)
+\tretiZadani{E}
+
+\subsection{Nahrazení napěťového zdroje za proudový zdroj}
+Nahradíme si napěťový zdroj za proudový \I{3}, pro který platí: $$\I{3} = \Gg{5}\times\Uu{} = \frac{21}{135} = \SI{0.1556}{\ampere}$$
+$$G = \frac{1}{R}$$
+
+\begin{figure} [H]
+    \centering
+    \begin{circuitikz}
+    \draw
+    (0,0) to[ioosource, i=\I{1}] (0,2)
+    (0,2) -- (2,2)
+    (2,2) to[R, l^=\Gg{4}] (4,2)
+    (2,2) -- (2,4)
+    (2,3) to[R, l^=\Gg{5}] (4,3)
+    (4,4) to[ioosource, i=\I{3}] (2,4)
+    (4,4) -- (4,2)
+    (4,2) to[R, l^=\Gg{3}] (4,0)
+    (2,2) to[R, l^=\Gg{1}] (2,0)
+    (4,2) -- (6,2)
+    (6,0) to[ioosource, i=\I{2}] (6,2)
+    (6,0) -- (4,0)
+    (4,0) to[R, l^=\Gg{2}] (2,0)
+    (0,0) -- (2,0)
+    (2,2) node[circ]
+    
+    (2,0) node[circ]
+    
+    (4,0) node[circ]
+    
+    (4,2) node[circ]
+    
+    (4,3) node[circ]
+    
+    (2,3) node[circ]
+    
+    {[anchor=south east] (2,2) node {A}}
+    {[anchor=south west] (4,2) node {B}}
+    {[anchor=north] (4,0) node {C}};
+    \end{circuitikz}
+\end{figure}
+
+\begin{figure}[H]
+Vyjádříme si proudy: \\
+$$\I{R1} = \Gg{1}\times\Uu{A}$$
+$$\I{R2} = \Gg{2}\times\Uu{C}$$
+$$\I{R3} = \Gg{3}\times(\Uu{B} - \Uu{C})$$
+$$\I{R4} = \Gg{4}\times(\Uu{A} - \Uu{B})$$
+$$\I{R3} = \Gg{5}\times(\Uu{A} - \Uu{B})$$
+
+Nyní vytvoříme rovnice pro uzly (proudy, které protékají uzly A, B a C):
+$$A: \I{1} + \I{R5} - \I{R4} - \I{R1} = 0$$
+$$B: \I{2} - \I{R3} + \I{R4} = 0$$
+$$C: \I{R3} - \I{R2} - \I{2} = 0$$
+\end{figure}
+
+\begin{figure}
+Proudy rozložíme na součin odporů a uzlových napětí:
+$$\Gg{5}(\Uu{A} - \Uu{B}) - \Gg{4}(\Uu{A} - \Uu{B}) - \Gg{1}\Uu{A} = -\I{1}$$
+$$-\Gg{3}(\Uu{B} - \Uu{C}) + \Gg{4}(\Uu{A} - \Uu{B}) = -\I{A}$$
+$$\Gg{3}(\Uu{B} - \Uu{C}) - \Gg{2}\Uu{C} = \I{2}$$
+
+Vytkneme si jednotlivá napětí:
+$$\Uu{A}(\Gg{5} - \Gg{4} - \Gg{1}) + \Uu{B}(-\Gg{5} + \Gg{4}) = -\I{1}$$
+$$ \Uu{A}(\Gg{4}) + \Uu{B}(-\Gg{3} - \Gg{4}) + \Uu{C}(\Gg{3}) = -\I{2}$$
+$$\Uu{B}(\Gg{3}) +  \Uu{C}(-\Gg{3} - \Gg{2}) = \I{2}$$
+\end{figure}
+
+\begin{figure}[H]
+Soustavu rovnic převedeme do matic ve formě $Ax = B$ \\
+A je matice odporů, x je matice napětí a B je matice výsledných proudů
+\begin{align*}
+    \begin{pmatrix}
+    \Gg{5}-\Gg{4}-\Gg{1}&-\Gg{5}+\Gg{4}&0 \\
+    \Gg{4}&-\Gg{3}-\Gg{4}&\Gg{3} \\
+    0&\Gg{3}&-\Gg{3}-\Gg{2}
+    \end{pmatrix}\times
+    \begin{pmatrix}
+    \Uu{A} \\
+    \Uu{B} \\
+    \Uu{A}
+    \end{pmatrix} = 
+    \begin{pmatrix}
+    -\I{1} \\
+    -\I{2} \\
+    \I{2}
+    \end{pmatrix}
+\end{align*}
+\subsection{Počítání matic a determinantů}
+Dosazení do matice:
+\begin{align*}
+    \begin{pmatrix}
+    \frac{5}{1092}&-\frac{1}{42}&0 \\[5pt]
+    \frac{1}{42}&-\frac{47}{1092}&\frac{1}{52} \\[5pt]
+    0&\frac{1}{52}&-\frac{47}{1092}
+    \end{pmatrix}\times
+    \begin{pmatrix}
+    \Uu{A} \\[5pt]
+    \Uu{B} \\[5pt]
+    \Uu{A}
+    \end{pmatrix} = 
+    \begin{pmatrix}
+    -\frac{11}{20} \\[5pt]
+    -\frac{13}{20} \\[5pt]
+    \frac{13}{20}
+    \end{pmatrix}
+\end{align*}
+\end{figure}
+
+\begin{figure}[H]
+Vypočítáme determinanty $\Delta, \Delta_B, \Delta_C$ pomocí Sarrusova pravidla:
+\begin{gather*}
+    \Delta = 
+    \begin{vmatrix}
+    \frac{5}{1092}&-\frac{1}{42}&0 \\[5pt]
+    \frac{1}{42}&-\frac{47}{1092}&\frac{1}{52} \\[5pt]
+    0&\frac{1}{52}&-\frac{47}{1092}
+    \end{vmatrix} = 
+    (\frac{11045}{1302170688} - \frac{5}{2952768} - \frac{47}{1926288}) = -\frac{1}{56784}
+\end{gather*}
+\begin{gather*}
+    \Delta_B = 
+    \begin{vmatrix}
+    \frac{5}{1092}&-\frac{11}{20}&0 \\[5pt]
+    \frac{1}{42}&-\frac{13}{20}&\frac{1}{52} \\[5pt]
+    0&\frac{13}{20}&-\frac{47}{1092} 
+    \end{vmatrix} = 
+    (\frac{3055}{23849280} - \frac{65}{1135680} - \frac{517}{917280}) = -\frac{113}{229320}
+\end{gather*}
+\begin{gather*}
+    \Delta_C = 
+    \begin{vmatrix}
+    \frac{5}{1092}&-\frac{1}{42}&-\frac{11}{20} \\[5pt]
+    \frac{1}{42}&-\frac{47}{1092}&-\frac{13}{20} \\[5pt]
+    0&\frac{1}{52}&-\frac{13}{20} 
+    \end{vmatrix} = 
+    (-\frac{3055}{23849280} - \frac{11}{43680} - \frac{65}{1135680} + \frac{13}{35280}) = \frac{1}{21804}
+\end{gather*}
+\end{figure}
+
+\subsection{Dosazení}
+\begin{figure}[H]
+Využitím Cramerova pravidla vypočítáme uzlová napětí:
+$$\Uu{B} = \frac{\Delta_B}{\Delta} = \frac{-\frac{113}{229320}}{-\frac{1}{56784}} = \frac{2938}{105} = \SI{27.981}{\volt}$$
+$$\Uu{C} = \Uu{R2} = \frac{\Delta_C}{\Delta} = \frac{\frac{1}{21840}}{-\frac{1}{56784}} = -\frac{13}{5} = \SI{2.6}{\volt}$$
+
+Vypočítáme napětí:
+$$\Uu{R3} = \Uu{B} - \Uu{C} = (\frac{2938}{105} + \frac{13}{5}) = \SI{30.581}{\volt}$$
+a proud
+$$\I{R3} = \frac{\Uu{R3}}{\R{3}} = \frac{\frac{3211}{105}}{52} = \SI{0.5881}{\ampere}$$
+\end{figure}

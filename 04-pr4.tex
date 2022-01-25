@@ -1,0 +1,118 @@
+\section{Příklad 4}
+% Jako parametr zadejte skupinu (A-H)
+\ctvrtyZadani{E}
+
+\subsection{Sestavení a vyjádření smyčkových proudů}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+    \ctikzset{cute inductors}
+    \draw
+    (0,4) to[L, l=\Ll{1}] (2,4)
+    (2,4) to[sV = \Uu{1}] (5,4)
+    (0,4) -- (0,0)
+    (0,2) node[circ] {}
+    (0,2) to[R, l=\R{1}] (2,2)
+    (2,2) to[C, l=\Cc{2}] (5,2)
+    (5,2) node[circ] {}
+    (2,2) node[circ] {}
+    (2,2) to[sV=\Uu{2}] (2,0)
+    (0,0) to[C, l=\Cc{1}] (2,0)
+    (2,0) to[R, l=\R{2}] (5,0)
+    (2,0) node[circ] {}
+    (5,2) to[L, l=\Ll{2}] (5,0)
+    (5,2) node[circ] {}
+    (5,4) -- (5,2)
+    (3,3) node[circulator, scale = 0.6] {}
+    (1,1.1) node[circulator, scale = 0.6] {}
+    (4,1.1) node[circulator, scale = 0.6] {}
+    {[anchor=south west] (3,3) node{\I{A}} (1,1.1) node{\I{B}} (4,1.1) node{\I{C}}};
+    \end{circuitikz}
+\end{figure}
+\begin{figure}[H]
+Kondenzátory a cívky si převedeme na impedance pro snažší manipulaci s nimi pro počítání v matici.
+$$\omega = 2\pi f => 2\pi \times 180 => 180\pi \; \text{rad/s}$$
+$$Z_L_1 = j\omega L_1 = 180\pi \times 0.13 = 73.5133j\omega$$
+$$Z_L_2 = j\omega L_2 = 180\pi \times 0.06 = 33.9292j\omega$$
+$$Z_C_1 = -\frac{j}{\omega C_1} = -\frac{j}{180\pi \times 100\times 10^{-6}} = -17.6839j\omega$$
+$$Z_C_2 = -\frac{j}{\omega C_2} = -\frac{j}{180\pi \times 65\times 10^{-6}} = -27.206j\omega$$
+\end{figure}
+\begin{figure}[H]
+Vyjádříme si smyčkové proudy:
+$$I_A: Z_L_1I_A + Z_C_2(I_A - I_C) + R_1(I_A - I_B) = 0$$
+$$I_B: R_1(I_B - I_A) + U_2 + Z_C_1I_B = 0$$
+$$I_C: (R_2 + Z_L_2)I_C + Z_C_2(I_C - I_A) - U_2 = 0$$
+
+Dále vytvoříme matici pro smyčkové proudy:
+\begin{align*}
+    \begin{pmatrix}
+    Z_L_1 + Z_C_2 + R_1&-R_1&-Z_C_2 \\
+    -R_1&Z_C_1 + R_1&0 \\
+    -Z_C_2&0&R_2 + Z_L_2 + Z_C_2
+    \end{pmatrix} \times
+    \begin{pmatrix}
+    I_A \\
+    I_B \\
+    I_C
+    \end{pmatrix} = 
+    \begin{pmatrix}
+    -U_1 \\
+    -U_2 \\
+    U_2
+    \end{pmatrix}
+\end{align*}
+\end{figure}
+
+\begin{figure}[H]
+Dosadíme hodnoty do matice:
+\begin{align*}
+    \begin{pmatrix}
+    14+46.3073j&-14&27.206j \\
+    -14&14 - 17.6839j&0 \\
+    27.206j&0&13 + 6.7232j
+    \end{pmatrix} \times
+    \begin{pmatrix}
+    I_A \\
+    I_B \\
+    I_C
+    \end{pmatrix} = 
+    \begin{pmatrix}
+    -5 \\
+    -3 \\
+    3
+    \end{pmatrix}
+\end{align*}
+\end{figure}
+
+\subsection{Výpočet smyčkových proudů}
+Matice spočítáme pomocí Cramerova pravidla:
+\begin{align*}
+    \Delta =  
+    \begin{vmatrix}
+    14+46.3073j&-14&27.206j \\
+    -14&14 - 17.6839j&0 \\
+    27.206j&0&13 + 6.7232j
+    \end{vmatrix} = 
+    18313.7764 - 2373.9837j
+\end{align*}
+
+\begin{align*}
+    \Delta_C =  
+    \begin{vmatrix}
+    14+46.3073j&-14&-5 \\
+    -14&14 - 17.6839j&-3 \\
+    27.206j&0&3
+    \end{vmatrix} = 
+    4862.2219 + 4249.2548j
+\end{align*}
+$$I_C = I_L_2 = \frac{\Delta_C}{\Delta} = \frac{4862.2219 + 4249.2548j}{18313.7764 - 2373.9837j} = (0.2315 + 0.262j)\Am$$
+Vypočítáme napětí $U_{L2}$:
+$$U_{L2} = I_{L2}\times Z_{L2} = (0.2315 + 0.262j)\times 33.9292j = (-8.8895 + 7.8546j)\Vo$$
+Vypočítáme $|U_{L2}|$ a $\varphi_{L2}$:
+\begin{gather*}
+|U_{L2}| = \sqrt{{Re}{(U_{L2})^2} + {Im}{(U_{L2})^2}} = \sqrt{(-8.8895)^2 + (7.8546)^2} = \SI{11.8625}{\volt} \\
+\varphi_{L2} = arctg(\frac{Im(U_{L2})}{Re(U_{L2})} = arctg\frac{7.8546}{-8.8895} = -0.7237 rad \\
+\end{gather*}
+Protože jsme ve II. kvadrantu, musíme připočíst $\pi$:
+$$\varphi_{L2} = \pi - 0.7237 = 2.4179 rad = 138.5355^\circ$$
